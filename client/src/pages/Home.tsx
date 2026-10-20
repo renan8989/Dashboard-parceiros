@@ -57,7 +57,7 @@ import { Textarea } from "@/components/ui/textarea";
   channel: "WhatsApp Business",
   startedAt: "2026-10-10",
   objective: "Apresentar a oportunidade e identificar quem demonstrou interesse.",
-  target: 99,
+  target: 98,
  };
 
  const demoPartners: PartnerRecord[] = [
@@ -152,7 +152,7 @@ import { Textarea } from "@/components/ui/textarea";
   const stats = useMemo(() => ({
     total: campaign.target,
     elite: 34,
-    general: 65,
+    general: campaign.target - 34,
     eliteResponded: partners.filter((partner) => partner.segment === "elite").length,
     generalResponded: partners.filter((partner) => partner.segment === "general").length,
     responded: partners.length,
