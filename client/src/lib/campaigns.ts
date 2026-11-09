@@ -34,6 +34,39 @@ const lessencePartners: PartnerRecord[] = [
  ];
 
 
+const orygemPartners: PartnerRecord[] = [
+  { id: 101, name: 'Fernando Lacerda', segment: "general", region: 'Geral', phone: "", contactedAt: "2026-11-07", responseStatus: "responded", responseQuality: "positive", notes: '', history: [{ date: "2026-11-07", kind: "message", detail: 'Demonstrou interesse na oportunidade.' }] },
+  { id: 102, name: 'Isabel Simões', segment: "general", region: 'Geral', phone: "", contactedAt: "2026-11-07", responseStatus: "responded", responseQuality: "follow_up", notes: '', history: [{ date: "2026-11-07", kind: "message", detail: 'Respondeu ao contato.' }] },
+  { id: 103, name: 'Rogério', segment: "general", region: 'Geral', phone: "", contactedAt: "2026-11-07", responseStatus: "responded", responseQuality: "positive", notes: 'Trouxe cliente que desistiu.', history: [{ date: "2026-11-07", kind: "message", detail: 'Trouxe cliente que desistiu.' }] },
+  { id: 104, name: 'Augusto', segment: "elite", region: 'Golf', phone: "", contactedAt: "2026-11-07", responseStatus: "responded", responseQuality: "follow_up", notes: '', history: [{ date: "2026-11-07", kind: "message", detail: 'Respondeu ao contato.' }] },
+  { id: 105, name: 'João Pazze', segment: "general", region: 'Geral', phone: "", contactedAt: "2026-11-07", responseStatus: "responded", responseQuality: "positive", notes: '', history: [{ date: "2026-11-07", kind: "message", detail: 'Demonstrou interesse na oportunidade.' }] },
+  { id: 106, name: 'Ana', segment: "general", region: 'Barra', phone: "", contactedAt: "2026-11-07", responseStatus: "responded", responseQuality: "follow_up", notes: '', history: [{ date: "2026-11-07", kind: "message", detail: 'Respondeu ao contato.' }] },
+  { id: 107, name: 'Roberto', segment: "elite", region: 'Barra', phone: "", contactedAt: "2026-11-07", responseStatus: "responded", responseQuality: "positive", notes: 'Falou que o preço está salgado.', history: [{ date: "2026-11-07", kind: "message", detail: 'Falou que o preço está salgado.' }] },
+  { id: 108, name: 'Andrea', segment: "general", region: 'Recreio', phone: "", contactedAt: "2026-11-07", responseStatus: "responded", responseQuality: "follow_up", notes: '', history: [{ date: "2026-11-07", kind: "message", detail: 'Respondeu ao contato.' }] },
+  { id: 109, name: 'Rn', segment: "general", region: 'Geral', phone: "", contactedAt: "2026-11-07", responseStatus: "responded", responseQuality: "follow_up", notes: '', history: [{ date: "2026-11-07", kind: "message", detail: 'Respondeu ao contato.' }] },
+  { id: 110, name: 'Fernando', segment: "general", region: 'Barra', phone: "", contactedAt: "2026-11-07", responseStatus: "responded", responseQuality: "follow_up", notes: '', history: [{ date: "2026-11-07", kind: "message", detail: 'Respondeu ao contato.' }] },
+  { id: 111, name: 'Priscila', segment: "general", region: 'Blue', phone: "", contactedAt: "2026-11-07", responseStatus: "responded", responseQuality: "follow_up", notes: '', history: [{ date: "2026-11-07", kind: "message", detail: 'Respondeu ao contato.' }] },
+  { id: 112, name: 'André', segment: "general", region: 'Olímpica', phone: "", contactedAt: "2026-11-07", responseStatus: "responded", responseQuality: "positive", notes: '', history: [{ date: "2026-11-07", kind: "message", detail: 'Demonstrou interesse na oportunidade.' }] },
+  { id: 113, name: 'Deborah', segment: "elite", region: 'Campo Grande', phone: "", contactedAt: "2026-11-07", responseStatus: "responded", responseQuality: "follow_up", notes: '', history: [{ date: "2026-11-07", kind: "message", detail: 'Respondeu ao contato.' }] },
+  { id: 114, name: 'Suely', segment: "elite", region: 'Geral', phone: "", contactedAt: "2026-11-07", responseStatus: "responded", responseQuality: "follow_up", notes: '', history: [{ date: "2026-11-07", kind: "message", detail: 'Respondeu ao contato.' }] },
+  { id: 115, name: 'José Carlos', segment: "general", region: 'Olímpica', phone: "", contactedAt: "2026-11-07", responseStatus: "responded", responseQuality: "follow_up", notes: '', history: [{ date: "2026-11-07", kind: "message", detail: 'Respondeu ao contato.' }] },
+  { id: 116, name: 'Renata', segment: "general", region: 'Geral', phone: "", contactedAt: "2026-11-07", responseStatus: "responded", responseQuality: "follow_up", notes: '', history: [{ date: "2026-11-07", kind: "message", detail: 'Respondeu ao contato.' }] },
+  { id: 117, name: 'Simone', segment: "general", region: 'Olímpica', phone: "", contactedAt: "2026-11-07", responseStatus: "responded", responseQuality: "follow_up", notes: '', history: [{ date: "2026-11-07", kind: "message", detail: 'Respondeu ao contato.' }] },
+  { id: 118, name: 'Ravini', segment: "general", region: 'Península', phone: "", contactedAt: "2026-11-07", responseStatus: "responded", responseQuality: "follow_up", notes: '', history: [{ date: "2026-11-07", kind: "message", detail: 'Respondeu ao contato.' }] },
+  { id: 119, name: 'Nicolas', segment: "general", region: 'Geral', phone: "", contactedAt: "2026-11-07", responseStatus: "responded", responseQuality: "positive", notes: '', history: [{ date: "2026-11-07", kind: "message", detail: 'Demonstrou interesse na oportunidade.' }] },
+  { id: 120, name: 'Jaque', segment: "general", region: 'Olímpica', phone: "", contactedAt: "2026-11-07", responseStatus: "responded", responseQuality: "positive", notes: '', history: [{ date: "2026-11-07", kind: "message", detail: 'Demonstrou interesse na oportunidade.' }] },
+  { id: 121, name: 'Monica', segment: "elite", region: 'Barra', phone: "", contactedAt: "2026-11-07", responseStatus: "responded", responseQuality: "positive", notes: '', history: [{ date: "2026-11-07", kind: "message", detail: 'Demonstrou interesse na oportunidade.' }] },
+  { id: 122, name: 'Rodrigo', segment: "elite", region: 'Centro', phone: "", contactedAt: "2026-11-07", responseStatus: "responded", responseQuality: "follow_up", notes: '', history: [{ date: "2026-11-07", kind: "message", detail: 'Respondeu ao contato.' }] },
+  { id: 123, name: 'Thiago Soares', segment: "elite", region: 'Pontões', phone: "", contactedAt: "2026-11-07", responseStatus: "responded", responseQuality: "positive", notes: '', history: [{ date: "2026-11-07", kind: "message", detail: 'Demonstrou interesse na oportunidade.' }] },
+  { id: 124, name: 'Aline', segment: "elite", region: 'Campo Grande', phone: "", contactedAt: "2026-11-07", responseStatus: "responded", responseQuality: "positive", notes: '', history: [{ date: "2026-11-07", kind: "message", detail: 'Demonstrou interesse na oportunidade.' }] },
+  { id: 125, name: 'Karol', segment: "general", region: 'Olímpica', phone: "", contactedAt: "2026-11-07", responseStatus: "responded", responseQuality: "follow_up", notes: '', history: [{ date: "2026-11-07", kind: "message", detail: 'Respondeu ao contato.' }] },
+  { id: 126, name: 'João', segment: "elite", region: 'Golf', phone: "", contactedAt: "2026-11-07", responseStatus: "responded", responseQuality: "follow_up", notes: '', history: [{ date: "2026-11-07", kind: "message", detail: 'Respondeu ao contato.' }] },
+  { id: 127, name: 'Rafael', segment: "elite", region: 'Blue', phone: "", contactedAt: "2026-11-07", responseStatus: "responded", responseQuality: "follow_up", notes: '', history: [{ date: "2026-11-07", kind: "message", detail: 'Respondeu ao contato.' }] },
+  { id: 128, name: 'Rafael Blue', segment: "elite", region: 'Barra', phone: "", contactedAt: "2026-11-07", responseStatus: "responded", responseQuality: "follow_up", notes: '', history: [{ date: "2026-11-07", kind: "message", detail: 'Respondeu ao contato.' }] },
+  { id: 129, name: 'Geovana', segment: "elite", region: 'Barra', phone: "", contactedAt: "2026-11-07", responseStatus: "responded", responseQuality: "follow_up", notes: '', history: [{ date: "2026-11-07", kind: "message", detail: 'Respondeu ao contato.' }] },
+  { id: 130, name: 'Marcelo', segment: "elite", region: 'Geral', phone: "", contactedAt: "2026-11-07", responseStatus: "responded", responseQuality: "follow_up", notes: '', history: [{ date: "2026-11-07", kind: "message", detail: 'Respondeu ao contato.' }] },
+];
+
 export type CampaignId = "pre-venda-lessence" | "orygem-cassiano";
 
 export type Campaign = {
@@ -65,8 +98,8 @@ export const campaigns: Campaign[] = [
     target: 98,
     elite: 34,
     phaseNote: null,
-    storageKey: "gestor-parcerias:partners:orygem-cassiano:v1",
-    initialPartners: [],
+    storageKey: "gestor-parcerias:partners:orygem-cassiano:v2",
+    initialPartners: orygemPartners,
   },
 ];
 

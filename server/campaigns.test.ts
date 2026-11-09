@@ -40,12 +40,13 @@ describe("Investidas independentes", () => {
     expect(partners).toEqual(saved);
   });
 
-  it("começa Orygem vazia, com a data informada e sem observação da campanha anterior", () => {
+  it("carrega Orygem com os 30 parceiros informados e sem dados da campanha anterior", () => {
     expect(orygem.storageKey).not.toBe(lessence.storageKey);
     expect(orygem.startedAt).toBe("2026-11-07");
     expect(orygem.phaseNote).toBeNull();
     const storage = storageWith({ [lessence.storageKey]: JSON.stringify(lessence.initialPartners) });
-    expect(readCampaignPartners(orygem, storage)).toEqual([]);
+    expect(readCampaignPartners(orygem, storage)).toHaveLength(30);
+    expect(readCampaignPartners(orygem, storage)[0].name).toBe("Fernando Lacerda");
   });
 
   it("restaura apenas os registros da chave da Orygem e conserva a Lessence separada", () => {
@@ -74,12 +75,12 @@ describe("Investidas independentes", () => {
     expect(html).toContain("07 de novembro de 2026");
     expect(html).not.toContain("Hamilton");
     expect(html).not.toContain("Observação da Fase 1");
-    expect(html).toContain("Nenhuma resposta registrada nesta investida");
-    for (const label of ["Total de parceiros", "Total Elite", "Total Geral", "Total que responderam", "Total interessados", "Sem resposta", "Nome do parceiro", "Categoria", "Data de resposta", "Como reagiu"]) {
+    expect(html).toContain("Fernando Lacerda");
+    for (const label of ["Total de parceiros", "Total Elite", "Total Geral", "Total que responderam", "Total interessados", "Sem resposta", "Nome do parceiro", "Categoria", "Comentários", "Como reagiu"]) {
       expect(html).toContain(label);
     }
     expect(html.match(/class="metric-value"/g)).toHaveLength(6);
-    expect(html.match(/class="column-sort/g)).toHaveLength(4);
+    expect(html.match(/class="column-sort/g)).toHaveLength(3);
   });
 
   it("continua renderizando a Lessence com os registros e a observação originais", () => {
