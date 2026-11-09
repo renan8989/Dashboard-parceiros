@@ -40,9 +40,9 @@ describe("Investidas independentes", () => {
     expect(partners).toEqual(saved);
   });
 
-  it("começa Orygem vazia, sem data presumida e sem observação da campanha anterior", () => {
+  it("começa Orygem vazia, com a data informada e sem observação da campanha anterior", () => {
     expect(orygem.storageKey).not.toBe(lessence.storageKey);
-    expect(orygem.startedAt).toBeNull();
+    expect(orygem.startedAt).toBe("2026-11-07");
     expect(orygem.phaseNote).toBeNull();
     const storage = storageWith({ [lessence.storageKey]: JSON.stringify(lessence.initialPartners) });
     expect(readCampaignPartners(orygem, storage)).toEqual([]);
@@ -71,7 +71,7 @@ describe("Investidas independentes", () => {
     const html = renderToStaticMarkup(createElement(Home));
     expect(html).toContain("<h1>Orygem Cassiano</h1>");
     expect(html).toContain("Pré-venda Lessence");
-    expect(html).toContain("Data de início não informada");
+    expect(html).toContain("07 de novembro de 2026");
     expect(html).not.toContain("Hamilton");
     expect(html).not.toContain("Observação da Fase 1");
     expect(html).toContain("Nenhuma resposta registrada nesta investida");

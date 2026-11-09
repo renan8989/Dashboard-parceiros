@@ -61,7 +61,7 @@ export const campaigns: Campaign[] = [
   {
     id: "orygem-cassiano",
     name: "Orygem Cassiano",
-    startedAt: null,
+    startedAt: "2026-11-07",
     target: 98,
     elite: 34,
     phaseNote: null,
