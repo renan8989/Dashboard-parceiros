@@ -45,7 +45,7 @@ describe("Investidas independentes", () => {
     expect(orygem.startedAt).toBe("2026-11-07");
     expect(orygem.phaseNote).toBeNull();
     const storage = storageWith({ [lessence.storageKey]: JSON.stringify(lessence.initialPartners) });
-    expect(readCampaignPartners(orygem, storage)).toHaveLength(30);
+    expect(readCampaignPartners(orygem, storage)).toHaveLength(31);
     expect(readCampaignPartners(orygem, storage)[0].name).toBe("Fernando Lacerda");
   });
 
@@ -76,6 +76,7 @@ describe("Investidas independentes", () => {
     expect(html).not.toContain("Hamilton");
     expect(html).not.toContain("Observação da Fase 1");
     expect(html).toContain("Fernando Lacerda");
+    expect(html).toContain("João Pedro");
     for (const label of ["Total de parceiros", "Total Elite", "Total Geral", "Total que responderam", "Total interessados", "Sem resposta", "Nome do parceiro", "Categoria", "Comentários", "Como reagiu"]) {
       expect(html).toContain(label);
     }
