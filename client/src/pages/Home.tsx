@@ -28,59 +28,14 @@ import {
   Users,
   X,
 } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState, type SetStateAction } from "react";
+import { campaigns, initialCampaignId, readCampaignPartners, type CampaignId, type PartnerRecord, type PartnerSegment, type ResponseQuality, type ResponseStatus } from "@/lib/campaigns";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
- type ResponseStatus = "responded" | "no_response";
- type ResponseQuality = "positive" | "follow_up" | "negative" | "none";
- type PartnerSegment = "elite" | "general";
- type ViewKey = "overview";
 
- type PartnerRecord = {
-  id: number;
-  name: string;
-  segment: PartnerSegment;
-  region: string;
-  phone: string;
-  contactedAt: string;
-  responseStatus: ResponseStatus;
-  responseQuality: ResponseQuality;
-  notes: string;
-  history: { date: string; kind: "message" | "call" | "note"; detail: string }[];
- };
-
- const campaign = {
-  name: "Pré-venda Lessence",
-  channel: "WhatsApp Business",
-  startedAt: "2026-10-10",
-  objective: "Apresentar a oportunidade e identificar quem demonstrou interesse.",
-  target: 98,
- };
-
- const demoPartners: PartnerRecord[] = [
-  { id: 1, name: 'Hamilton', segment: "elite", region: "Muriqui", phone: "", contactedAt: "2026-10-11", responseStatus: "responded", responseQuality: "positive", notes: '', history: [{ date: "2026-10-11", kind: "message", detail: 'Demonstrou interesse na oportunidade.' }] },
-  { id: 2, name: 'Fernando Lacerda', segment: "elite", region: "Geral", phone: "", contactedAt: "2026-10-11", responseStatus: "responded", responseQuality: "positive", notes: '', history: [{ date: "2026-10-11", kind: "message", detail: 'Demonstrou interesse na oportunidade.' }] },
-  { id: 3, name: 'Thiago Jacques', segment: "elite", region: "Barra", phone: "", contactedAt: "2026-10-11", responseStatus: "responded", responseQuality: "follow_up", notes: '', history: [{ date: "2026-10-11", kind: "message", detail: 'Respondeu de forma normal ao contato.' }] },
-  { id: 4, name: 'Thiago Soares', segment: "elite", region: "Pontões/Barra Sul", phone: "", contactedAt: "2026-10-11", responseStatus: "responded", responseQuality: "positive", notes: '', history: [{ date: "2026-10-11", kind: "message", detail: 'Demonstrou interesse na oportunidade.' }] },
-  { id: 5, name: 'Emanuel', segment: "elite", region: "Ipanema/Leblon", phone: "", contactedAt: "2026-10-11", responseStatus: "responded", responseQuality: "positive", notes: 'Tem parceiros que gostam de comprar lotes.', history: [{ date: "2026-10-11", kind: "message", detail: 'Tem parceiros que gostam de comprar lotes.' }] },
-  { id: 6, name: 'João CW', segment: "elite", region: "Golf", phone: "", contactedAt: "2026-10-11", responseStatus: "responded", responseQuality: "follow_up", notes: '', history: [{ date: "2026-10-11", kind: "message", detail: 'Respondeu de forma normal ao contato.' }] },
-  { id: 7, name: 'Geovana', segment: "elite", region: "Barra", phone: "", contactedAt: "2026-10-11", responseStatus: "responded", responseQuality: "follow_up", notes: '', history: [{ date: "2026-10-11", kind: "message", detail: 'Respondeu de forma normal ao contato.' }] },
-  { id: 8, name: 'Leonardo', segment: "elite", region: "Barra/Recreio", phone: "", contactedAt: "2026-10-11", responseStatus: "responded", responseQuality: "positive", notes: '', history: [{ date: "2026-10-11", kind: "message", detail: 'Demonstrou interesse na oportunidade.' }] },
-  { id: 9, name: 'Karol', segment: "elite", region: "Geral", phone: "", contactedAt: "2026-10-11", responseStatus: "responded", responseQuality: "positive", notes: '', history: [{ date: "2026-10-11", kind: "message", detail: 'Demonstrou interesse na oportunidade.' }] },
-  { id: 10, name: 'Aline', segment: "elite", region: "Campo Grande", phone: "", contactedAt: "2026-10-11", responseStatus: "responded", responseQuality: "positive", notes: '', history: [{ date: "2026-10-11", kind: "message", detail: 'Demonstrou interesse na oportunidade.' }] },
-  { id: 11, name: 'Rafael', segment: "elite", region: "Barra", phone: "", contactedAt: "2026-10-11", responseStatus: "responded", responseQuality: "positive", notes: 'Respondeu bem, mas não trabalha em Vargem.', history: [{ date: "2026-10-11", kind: "message", detail: 'Respondeu bem, mas não trabalha em Vargem.' }] },
-  { id: 12, name: 'Rafael Blue', segment: "elite", region: "Blue Houses", phone: "", contactedAt: "2026-10-11", responseStatus: "responded", responseQuality: "follow_up", notes: '', history: [{ date: "2026-10-11", kind: "message", detail: 'Respondeu de forma normal ao contato.' }] },
-  { id: 13, name: 'Monica', segment: "elite", region: "Barra", phone: "", contactedAt: "2026-10-11", responseStatus: "responded", responseQuality: "follow_up", notes: '', history: [{ date: "2026-10-11", kind: "message", detail: 'Respondeu de forma normal ao contato.' }] },
-  { id: 14, name: 'Suely', segment: "elite", region: "Geral", phone: "", contactedAt: "2026-10-11", responseStatus: "responded", responseQuality: "positive", notes: '', history: [{ date: "2026-10-11", kind: "message", detail: 'Demonstrou interesse na oportunidade.' }] },
-  { id: 15, name: 'Rafael Sr sra', segment: "elite", region: "Península", phone: "", contactedAt: "2026-10-13", responseStatus: "responded", responseQuality: "follow_up", notes: '', history: [{ date: "2026-10-13", kind: "message", detail: 'Respondeu de forma normal ao contato.' }] },
- ];
-
- const navItems: { key: ViewKey; label: string; icon: typeof LayoutDashboard }[] = [
-  { key: "overview", label: "Pré-venda Lessence", icon: LayoutDashboard },
- ];
 
  const qualityLabels: Record<ResponseQuality, string> = {
   positive: "Interessado",
@@ -96,18 +51,6 @@ import { Textarea } from "@/components/ui/textarea";
   none: "status-none",
  };
 
- const storageKey = "gestor-parcerias:partners:v12";
-
- function readPartners() {
-  if (typeof window === "undefined") return demoPartners;
-  try {
-    const saved = window.localStorage.getItem(storageKey);
-    const source = saved ? (JSON.parse(saved) as PartnerRecord[]) : demoPartners;
-    return source.map((partner) => ({ ...partner, region: partner.id === 15 && !partner.region ? "Península" : partner.region, segment: partner.segment ?? (partner.id <= 4 ? "elite" : "general") })).filter((partner) => partner.responseStatus === "responded");
-  } catch {
-    return demoPartners.filter((partner) => partner.responseStatus === "responded");
-  }
- }
 
  function formatDate(value: string) {
   return new Intl.DateTimeFormat("pt-BR", { day: "2-digit", month: "short" }).format(new Date(`${value}T12:00:00`)).replace(".", "");
@@ -126,8 +69,20 @@ import { Textarea } from "@/components/ui/textarea";
  }
 
  export default function Home() {
-  const [partners, setPartners] = useState<PartnerRecord[]>(readPartners);
-  const [view, setView] = useState<ViewKey>("overview");
+  const [activeCampaignId, setActiveCampaignId] = useState<CampaignId>(initialCampaignId);
+  const [partnersByCampaign, setPartnersByCampaign] = useState<Record<CampaignId, PartnerRecord[]>>(() => {
+    let storage: Storage | undefined;
+    try { storage = typeof window !== "undefined" ? window.localStorage : undefined; } catch { /* Browser storage may be unavailable. */ }
+    return Object.fromEntries(campaigns.map((item) => [item.id, readCampaignPartners(item, storage)])) as Record<CampaignId, PartnerRecord[]>;
+  });
+  const campaign = campaigns.find((item) => item.id === activeCampaignId)!;
+  const partners = partnersByCampaign[activeCampaignId];
+  const setPartners = (update: SetStateAction<PartnerRecord[]>) => {
+    setPartnersByCampaign((current) => ({
+      ...current,
+      [activeCampaignId]: typeof update === "function" ? update(current[activeCampaignId]) : update,
+    }));
+  };
   const [query, setQuery] = useState("");
   const [reactionOrder, setReactionOrder] = useState<"normal" | "positive">("normal");
   const [sort, setSort] = useState<"date" | "name" | "reaction" | "segment">("date");
@@ -140,8 +95,24 @@ import { Textarea } from "@/components/ui/textarea";
   const [toast, setToast] = useState("");
 
   useEffect(() => {
-    window.localStorage.setItem(storageKey, JSON.stringify(partners));
-  }, [partners]);
+    try {
+      campaigns.forEach((item) => window.localStorage.setItem(item.storageKey, JSON.stringify(partnersByCampaign[item.id])));
+    } catch {
+      setToast("Não foi possível salvar no navegador. Mantenha esta aba aberta.");
+    }
+  }, [partnersByCampaign]);
+
+  const selectCampaign = (id: CampaignId) => {
+    setActiveCampaignId(id);
+    setQuery("");
+    setSelected(null);
+    setEditing(null);
+    setFormOpen(false);
+    setToast("");
+    const url = new URL(window.location.href);
+    url.searchParams.set("investida", id);
+    window.history.replaceState(null, "", url.pathname + url.search + url.hash);
+  };
 
   useEffect(() => {
     if (!toast) return;
@@ -151,15 +122,15 @@ import { Textarea } from "@/components/ui/textarea";
 
   const stats = useMemo(() => ({
     total: campaign.target,
-    elite: 34,
-    general: campaign.target - 34,
+    elite: campaign.elite,
+    general: campaign.target - campaign.elite,
     eliteResponded: partners.filter((partner) => partner.segment === "elite").length,
     generalResponded: partners.filter((partner) => partner.segment === "general").length,
     responded: partners.length,
     noResponse: Math.max(0, campaign.target - partners.length),
     positive: partners.filter((partner) => partner.responseQuality === "positive").length,
     normal: partners.filter((partner) => partner.responseQuality !== "positive").length,
-  }), [partners]);
+  }), [campaign, partners]);
 
   const filteredPartners = useMemo(() => {
     const normalized = query.trim().toLowerCase();
@@ -187,7 +158,7 @@ import { Textarea } from "@/components/ui/textarea";
         }
         return 0;
       });
-  }, [dateOrder, nameOrder, partners, query, reactionOrder, segmentOrder, sort, view]);
+  }, [dateOrder, nameOrder, partners, query, reactionOrder, segmentOrder, sort]);
 
   const openNewForm = () => {
     setEditing(null);
@@ -237,11 +208,13 @@ import { Textarea } from "@/components/ui/textarea";
         </div>
         <div className="sidebar-section-label">Investidas</div>
         <nav className="nav-list" aria-label="Navegação principal">
-          {navItems.map((item) => {
-            const Icon = item.icon;
-            const count = stats.responded;
-            return <button key={item.key} className={`nav-item ${view === item.key ? "is-active" : ""}`} onClick={() => setView(item.key)}><Icon size={17} /><span>{item.label}</span><span className="nav-count">{count}</span></button>;
-          })}
+          {campaigns.map((item) => (
+            <button key={item.id} className={`nav-item ${activeCampaignId === item.id ? "is-active" : ""}`} onClick={() => selectCampaign(item.id)} aria-current={activeCampaignId === item.id ? "page" : undefined}>
+              <LayoutDashboard size={17} />
+              <span>{item.name}</span>
+              <span className="nav-count">{partnersByCampaign[item.id].length}</span>
+            </button>
+          ))}
         </nav>
         <button className="add-campaign"><Plus size={15} /> Nova investida</button>
         <div className="sidebar-footer"><div className="sidebar-tip"><Sparkles size={16} /><div><strong>Próxima ação</strong><span>{stats.noResponse} contatos sem retorno precisam de follow-up.</span></div></div><div className="profile-row"><div className="avatar avatar-dark">GP</div><div><strong>Gestor de parcerias</strong><span>Operação comercial</span></div><MoreHorizontal size={16} /></div></div>
@@ -251,9 +224,9 @@ import { Textarea } from "@/components/ui/textarea";
         <header className="topbar"><div className="breadcrumbs"><span>Investidas</span><ChevronRight size={13} /><strong>{campaign.name}</strong></div><div className="topbar-actions"><span className="sync-label"><span className="sync-dot" /> Salvo agora</span></div></header>
 
         <div className="page-wrap">
-          <section className="page-heading"><div><div className="eyebrow"><span className="eyebrow-line" /> Investida ativa <span className="eyebrow-date">Iniciada em 10 out 2026</span></div><h1>{title}</h1><p className="subtitle">Registre somente quem respondeu ao contato e acompanhe a qualidade de cada reação.</p></div><div className="heading-actions"><button className="secondary-button"><ExternalLink size={15} /> Exportar</button><Button onClick={openNewForm}><Plus size={16} /> Registrar resposta</Button></div></section>
+          <section className="page-heading"><div><div className="eyebrow"><span className="eyebrow-line" /> Investida ativa <span className="eyebrow-date">{campaign.startedAt ? `Iniciada em ${formatLongDate(campaign.startedAt)}` : "Data de início não informada"}</span></div><h1>{title}</h1><p className="subtitle">Registre somente quem respondeu ao contato e acompanhe a qualidade de cada reação.</p></div><div className="heading-actions"><button className="secondary-button"><ExternalLink size={15} /> Exportar</button><Button onClick={openNewForm}><Plus size={16} /> Registrar resposta</Button></div></section>
 
-          {view === "overview" && <section className="metrics-stack" aria-label="Resumo da investida">
+          <section className="metrics-stack" aria-label="Resumo da investida">
             <div className="metrics-row metrics-row-primary">
               <div className="metric-card metric-dark"><div className="metric-top"><span>Total de parceiros</span><Users size={17} /></div><div className="metric-value">{stats.total}</div><div className="metric-bottom"><span className="metric-trend"><ArrowUpRight size={13} /> base da investida</span><span>100% cadastrados</span></div><div className="progress-track"><div className="progress-fill progress-mint" style={{ width: "100%" }} /></div></div>
               <div className="metric-card metric-elite"><div className="metric-top"><span>Total Elite</span><Target size={17} /></div><div className="metric-value">{stats.elite}</div><div className="metric-bottom"><span className="metric-trend metric-trend-green"><MessageCircle size={13} /> {stats.eliteResponded} responderam</span><span>{eliteRate}%</span></div><div className="mini-bars"><span style={{ height: "32%" }} /><span style={{ height: "47%" }} /><span style={{ height: "38%" }} /><span style={{ height: "61%" }} /><span style={{ height: "56%" }} /><span className="bar-active" style={{ height: `${Math.max(16, eliteRate)}%` }} /></div></div>
@@ -264,14 +237,14 @@ import { Textarea } from "@/components/ui/textarea";
               <div className="metric-card metric-positive"><div className="metric-top"><span>Total interessados</span><Sparkles size={17} /></div><div className="metric-value">{stats.positive}</div><div className="metric-bottom"><span className="metric-trend metric-trend-coral"><ArrowUpRight size={13} /> {positiveRate}% dos retornos</span><span>prioridade alta</span></div><div className="interest-dots"><span className="interest-dot active" /><span className="interest-dot active" /><span className="interest-dot active" /><span className="interest-dot active" /><span className="interest-dot" /><span className="interest-dot" /><span className="interest-dot" /></div></div>
               <div className="metric-card"><div className="metric-top"><span>Sem resposta</span><CircleAlert size={17} /></div><div className="metric-value">{stats.noResponse}</div><div className="metric-bottom"><span className="metric-trend metric-trend-amber"><Clock3 size={13} /> {noResponseRate}% da base</span><span>próxima ação</span></div><div className="followup-line"><span className="followup-avatar">{stats.noResponse}</span><span>contatos aguardando follow-up</span></div></div>
             </div>
-          </section>}
+          </section>
 
-            {view === "overview" && <div className="phase-note-strip"><Sparkles size={15} /><span><strong>Observação da Fase 1:</strong> o envio foi feito somente para os parceiros Elite.</span></div>}
-            {view === "overview" && <section className="insight-strip"><div className="insight-icon"><Sparkles size={18} /></div><div><strong>Registre cada resposta assim que ela chegar.</strong><span>Use “Interessado” para destacar os parceiros que merecem prioridade na próxima conversa.</span></div><button onClick={openNewForm} className="insight-link">Registrar resposta <ArrowUpRight size={14} /></button></section>}
+            {campaign.phaseNote && <div className="phase-note-strip"><Sparkles size={15} /><span><strong>Observação da Fase 1:</strong> {campaign.phaseNote}</span></div>}
+            <section className="insight-strip"><div className="insight-icon"><Sparkles size={18} /></div><div><strong>Registre cada resposta assim que ela chegar.</strong><span>Use “Interessado” para destacar os parceiros que merecem prioridade na próxima conversa.</span></div><button onClick={openNewForm} className="insight-link">Registrar resposta <ArrowUpRight size={14} /></button></section>
 
           <section className="list-section"><div className="list-heading"><div><div className="section-kicker"><Activity size={14} /> Respostas registradas</div><h2>Parceiros que responderam</h2></div><div className="list-meta"><span className="demo-pill"><span /> Dados da operação</span><span>{filteredPartners.length} exibidos</span></div></div>
             <div className="toolbar"><div className="search-wrap"><Search size={16} /><Input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Buscar parceiro" /></div><span className="sort-hint"><ChevronsUpDown size={14} /> Clique nas setas para ordenar e agrupar</span></div>
-            <div className="partner-table-wrap"><table className="partner-table"><thead><tr><th><button className="column-sort" onClick={() => { setSort("name"); setNameOrder((current) => current === "asc" ? "desc" : "asc"); }} aria-label={`Ordenar nome ${nameOrder === "asc" ? "de A a Z" : "de Z a A"}`}>Nome do parceiro <ChevronsUpDown size={13} /></button></th><th><button className={`column-sort reaction-sort-${segmentOrder}`} onClick={() => { setSort("segment"); setSegmentOrder(segmentOrder === "elite" ? "general" : "elite"); }} aria-label={`Agrupar ${segmentOrder === "elite" ? "Geral" : "Elite"} primeiro`}>Categoria <ChevronsUpDown size={13} /></button></th><th><button className="column-sort" onClick={() => { setSort("date"); setDateOrder((current) => current === "asc" ? "desc" : "asc"); }} aria-label={`Ordenar data ${dateOrder === "asc" ? "mais próxima primeiro" : "mais distante primeiro"}`}>Data de resposta <ChevronsUpDown size={13} /></button></th><th><button className={`column-sort reaction-sort-${reactionOrder}`} onClick={() => { setSort("reaction"); setReactionOrder(reactionOrder === "normal" ? "positive" : "normal"); }} aria-label={`Agrupar ${reactionOrder === "normal" ? "interessados" : "normais"} primeiro`}>Como reagiu <ChevronsUpDown size={13} /></button></th><th><span className="sr-only">Ações</span></th></tr></thead><tbody>{filteredPartners.map((partner) => <tr key={partner.id} className={partner.responseQuality === "positive" ? "is-positive-row" : ""} onClick={() => setSelected(partner)}><td><div className="partner-cell"><div><strong>{partner.name}</strong><span>{partner.region || "Região não informada"}</span></div></div></td><td><span className={`segment-tag segment-${partner.segment}`}>{partner.segment === "elite" ? "Elite" : "Geral"}</span></td><td><span className="date-cell"><CalendarDays size={13} /> {formatDate(partner.contactedAt)}</span></td><td><span className={`quality-label ${partner.responseQuality === "positive" ? "status-positive" : "status-follow-up"}`}>{partner.responseQuality === "positive" && <Sparkles size={13} />}{partner.responseQuality === "positive" ? "Interessado" : "Normal"}</span></td><td><button className="row-more" onClick={(event) => { event.stopPropagation(); setSelected(partner); }} aria-label={`Abrir ${partner.name}`}><ChevronRight size={16} /></button></td></tr>)}</tbody></table>{filteredPartners.length === 0 && <div className="empty-state"><Search size={23} /><strong>Nenhuma resposta encontrada</strong><span>Tente remover um filtro ou buscar por outro termo.</span></div>}</div>
+            <div className="partner-table-wrap"><table className="partner-table"><thead><tr><th><button className="column-sort" onClick={() => { setSort("name"); setNameOrder((current) => current === "asc" ? "desc" : "asc"); }} aria-label={`Ordenar nome ${nameOrder === "asc" ? "de A a Z" : "de Z a A"}`}>Nome do parceiro <ChevronsUpDown size={13} /></button></th><th><button className={`column-sort reaction-sort-${segmentOrder}`} onClick={() => { setSort("segment"); setSegmentOrder(segmentOrder === "elite" ? "general" : "elite"); }} aria-label={`Agrupar ${segmentOrder === "elite" ? "Geral" : "Elite"} primeiro`}>Categoria <ChevronsUpDown size={13} /></button></th><th><button className="column-sort" onClick={() => { setSort("date"); setDateOrder((current) => current === "asc" ? "desc" : "asc"); }} aria-label={`Ordenar data ${dateOrder === "asc" ? "mais próxima primeiro" : "mais distante primeiro"}`}>Data de resposta <ChevronsUpDown size={13} /></button></th><th><button className={`column-sort reaction-sort-${reactionOrder}`} onClick={() => { setSort("reaction"); setReactionOrder(reactionOrder === "normal" ? "positive" : "normal"); }} aria-label={`Agrupar ${reactionOrder === "normal" ? "interessados" : "normais"} primeiro`}>Como reagiu <ChevronsUpDown size={13} /></button></th><th><span className="sr-only">Ações</span></th></tr></thead><tbody>{filteredPartners.map((partner) => <tr key={partner.id} className={partner.responseQuality === "positive" ? "is-positive-row" : ""} onClick={() => setSelected(partner)}><td><div className="partner-cell"><div><strong>{partner.name}</strong><span>{partner.region || "Região não informada"}</span></div></div></td><td><span className={`segment-tag segment-${partner.segment}`}>{partner.segment === "elite" ? "Elite" : "Geral"}</span></td><td><span className="date-cell"><CalendarDays size={13} /> {formatDate(partner.contactedAt)}</span></td><td><span className={`quality-label ${partner.responseQuality === "positive" ? "status-positive" : "status-follow-up"}`}>{partner.responseQuality === "positive" && <Sparkles size={13} />}{partner.responseQuality === "positive" ? "Interessado" : "Normal"}</span></td><td><button className="row-more" onClick={(event) => { event.stopPropagation(); setSelected(partner); }} aria-label={`Abrir ${partner.name}`}><ChevronRight size={16} /></button></td></tr>)}</tbody></table>{filteredPartners.length === 0 && <div className="empty-state"><Search size={23} /><strong>{partners.length ? "Nenhuma resposta encontrada" : "Nenhuma resposta registrada nesta investida"}</strong><span>{partners.length ? "Tente buscar por outro termo." : "Clique em Registrar resposta para adicionar o primeiro parceiro que respondeu."}</span></div>}</div>
             <div className="table-footer"><span>Mostrando {filteredPartners.length} de {partners.length} respostas cadastradas</span><span className="table-limit">Base da investida: {campaign.target} parceiros <Target size={13} /></span></div>
           </section>
         </div>
