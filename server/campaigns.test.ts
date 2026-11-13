@@ -84,7 +84,7 @@ describe("Investidas independentes", () => {
       expect(html).toContain(label);
     }
     expect(html.match(/class="metric-value"/g)).toHaveLength(6);
-    expect(html.match(/class="column-sort/g)).toHaveLength(3);
+    expect(html.match(/class="column-sort/g)).toHaveLength(4);
   });
 
   it("continua renderizando a Lessence com os registros e a observação originais", () => {

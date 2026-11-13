@@ -85,8 +85,9 @@ import { Textarea } from "@/components/ui/textarea";
   };
   const [query, setQuery] = useState("");
   const [reactionOrder, setReactionOrder] = useState<"normal" | "positive">("normal");
-  const [sort, setSort] = useState<"date" | "name" | "reaction" | "segment">("date");
+  const [sort, setSort] = useState<"date" | "name" | "reaction" | "segment" | "comments">("date");
   const [nameOrder, setNameOrder] = useState<"asc" | "desc">("asc");
+  const [commentOrder, setCommentOrder] = useState<"asc" | "desc">("asc");
   const [dateOrder, setDateOrder] = useState<"asc" | "desc">("asc");
   const [segmentOrder, setSegmentOrder] = useState<"elite" | "general">("elite");
   const [selected, setSelected] = useState<PartnerRecord | null>(null);
@@ -152,13 +153,17 @@ import { Textarea } from "@/components/ui/textarea";
           const result = a.name.localeCompare(b.name, "pt-BR");
           return nameOrder === "asc" ? result : -result;
         }
+        if (sort === "comments") {
+          const result = a.notes.localeCompare(b.notes, "pt-BR");
+          return commentOrder === "asc" ? result : -result;
+        }
         if (sort === "date") {
           const result = a.contactedAt.localeCompare(b.contactedAt);
           return dateOrder === "asc" ? result : -result;
         }
         return 0;
       });
-  }, [dateOrder, nameOrder, partners, query, reactionOrder, segmentOrder, sort]);
+  }, [commentOrder, dateOrder, nameOrder, partners, query, reactionOrder, segmentOrder, sort]);
 
   const openNewForm = () => {
     setEditing(null);
@@ -249,7 +254,7 @@ import { Textarea } from "@/components/ui/textarea";
 
           <section className="list-section"><div className="list-heading"><div><div className="section-kicker"><Activity size={14} /> Respostas registradas</div><h2>Parceiros que responderam</h2></div><div className="list-meta"><span className="demo-pill"><span /> Dados da operação</span><span>{filteredPartners.length} exibidos</span></div></div>
             <div className="toolbar"><div className="search-wrap"><Search size={16} /><Input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Buscar parceiro" /></div><span className="sort-hint"><ChevronsUpDown size={14} /> Clique nas setas para ordenar e agrupar</span></div>
-            <div className="partner-table-wrap"><table className="partner-table"><thead><tr><th><button className="column-sort" onClick={() => { setSort("name"); setNameOrder((current) => current === "asc" ? "desc" : "asc"); }} aria-label={`Ordenar nome ${nameOrder === "asc" ? "de A a Z" : "de Z a A"}`}>Nome do parceiro <ChevronsUpDown size={13} /></button></th><th><button className={`column-sort reaction-sort-${segmentOrder}`} onClick={() => { setSort("segment"); setSegmentOrder(segmentOrder === "elite" ? "general" : "elite"); }} aria-label={`Agrupar ${segmentOrder === "elite" ? "Geral" : "Elite"} primeiro`}>Categoria <ChevronsUpDown size={13} /></button></th><th><button className={`column-sort reaction-sort-${reactionOrder}`} onClick={() => { setSort("reaction"); setReactionOrder(reactionOrder === "normal" ? "positive" : "normal"); }} aria-label={`Agrupar ${reactionOrder === "normal" ? "interessados" : "normais"} primeiro`}>Como reagiu <ChevronsUpDown size={13} /></button></th><th><span className="column-label">Comentários</span></th><th><span className="sr-only">Ações</span></th></tr></thead><tbody>{filteredPartners.map((partner) => <tr key={partner.id} className={partner.responseQuality === "positive" ? "is-positive-row" : ""} onClick={() => setSelected(partner)}><td><div className="partner-cell"><div><strong>{partner.name}</strong><span>{partner.region || "Região não informada"}</span></div></div></td><td><span className={`segment-tag segment-${partner.segment}`}>{partner.segment === "elite" ? "Elite" : "Geral"}</span></td><td><span className={`quality-label ${partner.responseQuality === "positive" ? "status-positive" : "status-follow-up"}`}>{partner.responseQuality === "positive" && <Sparkles size={13} />}{partner.responseQuality === "positive" ? "Interessado" : "Normal"}</span></td><td><span className="comment-cell">{partner.notes || "—"}</span></td><td><button className="row-more" onClick={(event) => { event.stopPropagation(); setSelected(partner); }} aria-label={`Abrir ${partner.name}`}><ChevronRight size={16} /></button></td></tr>)}</tbody></table>{filteredPartners.length === 0 && <div className="empty-state"><Search size={23} /><strong>{partners.length ? "Nenhuma resposta encontrada" : "Nenhuma resposta registrada nesta investida"}</strong><span>{partners.length ? "Tente buscar por outro termo." : "Clique em Registrar resposta para adicionar o primeiro parceiro que respondeu."}</span></div>}</div>
+            <div className="partner-table-wrap"><table className="partner-table"><thead><tr><th><button className="column-sort" onClick={() => { setSort("name"); setNameOrder((current) => current === "asc" ? "desc" : "asc"); }} aria-label={`Ordenar nome ${nameOrder === "asc" ? "de A a Z" : "de Z a A"}`}>Nome do parceiro <ChevronsUpDown size={13} /></button></th><th><button className={`column-sort reaction-sort-${segmentOrder}`} onClick={() => { setSort("segment"); setSegmentOrder(segmentOrder === "elite" ? "general" : "elite"); }} aria-label={`Agrupar ${segmentOrder === "elite" ? "Geral" : "Elite"} primeiro`}>Categoria <ChevronsUpDown size={13} /></button></th><th><button className={`column-sort reaction-sort-${reactionOrder}`} onClick={() => { setSort("reaction"); setReactionOrder(reactionOrder === "normal" ? "positive" : "normal"); }} aria-label={`Agrupar ${reactionOrder === "normal" ? "interessados" : "normais"} primeiro`}>Como reagiu <ChevronsUpDown size={13} /></button></th><th><button className="column-sort" onClick={() => { setSort("comments"); setCommentOrder((current) => current === "asc" ? "desc" : "asc"); }} aria-label={`Ordenar comentários ${commentOrder === "asc" ? "de A a Z" : "de Z a A"}`}>Comentários <ChevronsUpDown size={13} /></button></th><th><span className="sr-only">Ações</span></th></tr></thead><tbody>{filteredPartners.map((partner) => <tr key={partner.id} className={partner.responseQuality === "positive" ? "is-positive-row" : ""} onClick={() => setSelected(partner)}><td><div className="partner-cell"><div><strong>{partner.name}</strong><span>{partner.region || "Região não informada"}</span></div></div></td><td><span className={`segment-tag segment-${partner.segment}`}>{partner.segment === "elite" ? "Elite" : "Geral"}</span></td><td><span className={`quality-label ${partner.responseQuality === "positive" ? "status-positive" : "status-follow-up"}`}>{partner.responseQuality === "positive" && <Sparkles size={13} />}{partner.responseQuality === "positive" ? "Interessado" : "Normal"}</span></td><td><span className="comment-cell">{partner.notes || "—"}</span></td><td><button className="row-more" onClick={(event) => { event.stopPropagation(); setSelected(partner); }} aria-label={`Abrir ${partner.name}`}><ChevronRight size={16} /></button></td></tr>)}</tbody></table>{filteredPartners.length === 0 && <div className="empty-state"><Search size={23} /><strong>{partners.length ? "Nenhuma resposta encontrada" : "Nenhuma resposta registrada nesta investida"}</strong><span>{partners.length ? "Tente buscar por outro termo." : "Clique em Registrar resposta para adicionar o primeiro parceiro que respondeu."}</span></div>}</div>
             <div className="table-footer"><span>Mostrando {filteredPartners.length} de {partners.length} respostas cadastradas</span><span className="table-limit">Base da investida: {campaign.target} parceiros <Target size={13} /></span></div>
           </section>
         </div>
