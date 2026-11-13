@@ -17,12 +17,13 @@ function mockWindow(investida: string, values: Record<string, string> = {}) {
 afterEach(() => vi.unstubAllGlobals());
 
 describe("Investidas independentes", () => {
-  it("mantém a base de 98, dividida em 34 Elite e 64 Geral, nas duas investidas", () => {
-    for (const campaign of campaigns) {
-      expect(campaign.target).toBe(98);
-      expect(campaign.elite).toBe(34);
-      expect(campaign.target - campaign.elite).toBe(64);
-    }
+  it("mantém a base da Lessence em 98 e da Orygem em 99, com 34 Elite", () => {
+    expect(lessence.target).toBe(98);
+    expect(lessence.elite).toBe(34);
+    expect(lessence.target - lessence.elite).toBe(64);
+    expect(orygem.target).toBe(99);
+    expect(orygem.elite).toBe(34);
+    expect(orygem.target - orygem.elite).toBe(65);
   });
 
   it("preserva os 15 parceiros reais, a data e a chave local da Lessence", () => {
@@ -40,12 +41,12 @@ describe("Investidas independentes", () => {
     expect(partners).toEqual(saved);
   });
 
-  it("carrega Orygem com os 30 parceiros informados e sem dados da campanha anterior", () => {
+  it("carrega Orygem com os 33 parceiros informados e sem dados da campanha anterior", () => {
     expect(orygem.storageKey).not.toBe(lessence.storageKey);
     expect(orygem.startedAt).toBe("2026-11-07");
     expect(orygem.phaseNote).toBeNull();
     const storage = storageWith({ [lessence.storageKey]: JSON.stringify(lessence.initialPartners) });
-    expect(readCampaignPartners(orygem, storage)).toHaveLength(31);
+    expect(readCampaignPartners(orygem, storage)).toHaveLength(33);
     expect(readCampaignPartners(orygem, storage)[0].name).toBe("Fernando Lacerda");
   });
 
@@ -77,6 +78,8 @@ describe("Investidas independentes", () => {
     expect(html).not.toContain("Observação da Fase 1");
     expect(html).toContain("Fernando Lacerda");
     expect(html).toContain("João Pedro");
+    expect(html).toContain("Ursula");
+    expect(html).toContain("Felipe");
     for (const label of ["Total de parceiros", "Total Elite", "Total Geral", "Total que responderam", "Total interessados", "Sem resposta", "Nome do parceiro", "Categoria", "Comentários", "Como reagiu"]) {
       expect(html).toContain(label);
     }

@@ -45,7 +45,7 @@ const orygemPartners: PartnerRecord[] = [
   { id: 108, name: 'Andrea', segment: "general", region: 'Recreio', phone: "", contactedAt: "2026-11-07", responseStatus: "responded", responseQuality: "follow_up", notes: '', history: [{ date: "2026-11-07", kind: "message", detail: 'Respondeu ao contato.' }] },
   { id: 109, name: 'Rn', segment: "general", region: 'Geral', phone: "", contactedAt: "2026-11-07", responseStatus: "responded", responseQuality: "follow_up", notes: '', history: [{ date: "2026-11-07", kind: "message", detail: 'Respondeu ao contato.' }] },
   { id: 110, name: 'Fernando', segment: "general", region: 'Barra', phone: "", contactedAt: "2026-11-07", responseStatus: "responded", responseQuality: "follow_up", notes: '', history: [{ date: "2026-11-07", kind: "message", detail: 'Respondeu ao contato.' }] },
-  { id: 111, name: 'Priscila', segment: "general", region: 'Blue', phone: "", contactedAt: "2026-11-07", responseStatus: "responded", responseQuality: "follow_up", notes: '', history: [{ date: "2026-11-07", kind: "message", detail: 'Respondeu ao contato.' }] },
+  { id: 111, name: 'Priscila', segment: "elite", region: 'Blue', phone: "", contactedAt: "2026-11-07", responseStatus: "responded", responseQuality: "positive", notes: 'O parceiro dela tem cliente no perfil.', history: [{ date: "2026-11-07", kind: "message", detail: 'O parceiro dela tem cliente no perfil.' }] },
   { id: 112, name: 'André', segment: "general", region: 'Olímpica', phone: "", contactedAt: "2026-11-07", responseStatus: "responded", responseQuality: "positive", notes: '', history: [{ date: "2026-11-07", kind: "message", detail: 'Demonstrou interesse na oportunidade.' }] },
   { id: 113, name: 'Deborah', segment: "elite", region: 'Campo Grande', phone: "", contactedAt: "2026-11-07", responseStatus: "responded", responseQuality: "follow_up", notes: '', history: [{ date: "2026-11-07", kind: "message", detail: 'Respondeu ao contato.' }] },
   { id: 114, name: 'Suely', segment: "elite", region: 'Geral', phone: "", contactedAt: "2026-11-07", responseStatus: "responded", responseQuality: "follow_up", notes: '', history: [{ date: "2026-11-07", kind: "message", detail: 'Respondeu ao contato.' }] },
@@ -59,13 +59,15 @@ const orygemPartners: PartnerRecord[] = [
   { id: 122, name: 'Rodrigo', segment: "elite", region: 'Centro', phone: "", contactedAt: "2026-11-07", responseStatus: "responded", responseQuality: "follow_up", notes: '', history: [{ date: "2026-11-07", kind: "message", detail: 'Respondeu ao contato.' }] },
   { id: 123, name: 'Thiago Soares', segment: "elite", region: 'Pontões', phone: "", contactedAt: "2026-11-07", responseStatus: "responded", responseQuality: "positive", notes: '', history: [{ date: "2026-11-07", kind: "message", detail: 'Demonstrou interesse na oportunidade.' }] },
   { id: 124, name: 'Aline', segment: "elite", region: 'Campo Grande', phone: "", contactedAt: "2026-11-07", responseStatus: "responded", responseQuality: "positive", notes: '', history: [{ date: "2026-11-07", kind: "message", detail: 'Demonstrou interesse na oportunidade.' }] },
-  { id: 125, name: 'Karol', segment: "elite", region: 'Olímpica', phone: "", contactedAt: "2026-11-07", responseStatus: "responded", responseQuality: "follow_up", notes: '', history: [{ date: "2026-11-07", kind: "message", detail: 'Respondeu ao contato.' }] },
+  { id: 125, name: 'Karol', segment: "elite", region: 'Olímpica', phone: "", contactedAt: "2026-11-07", responseStatus: "responded", responseQuality: "follow_up", notes: 'Falou que vai espalhar.', history: [{ date: "2026-11-07", kind: "message", detail: 'Falou que vai espalhar.' }] },
   { id: 126, name: 'João', segment: "elite", region: 'Golf', phone: "", contactedAt: "2026-11-07", responseStatus: "responded", responseQuality: "follow_up", notes: '', history: [{ date: "2026-11-07", kind: "message", detail: 'Respondeu ao contato.' }] },
   { id: 127, name: 'Rafael', segment: "elite", region: 'Blue', phone: "", contactedAt: "2026-11-07", responseStatus: "responded", responseQuality: "follow_up", notes: '', history: [{ date: "2026-11-07", kind: "message", detail: 'Respondeu ao contato.' }] },
   { id: 128, name: 'Rafael Blue', segment: "elite", region: 'Barra', phone: "", contactedAt: "2026-11-07", responseStatus: "responded", responseQuality: "follow_up", notes: '', history: [{ date: "2026-11-07", kind: "message", detail: 'Respondeu ao contato.' }] },
   { id: 129, name: 'Geovana', segment: "elite", region: 'Barra', phone: "", contactedAt: "2026-11-07", responseStatus: "responded", responseQuality: "follow_up", notes: '', history: [{ date: "2026-11-07", kind: "message", detail: 'Respondeu ao contato.' }] },
   { id: 130, name: 'Marcelo', segment: "elite", region: 'Geral', phone: "", contactedAt: "2026-11-07", responseStatus: "responded", responseQuality: "follow_up", notes: '', history: [{ date: "2026-11-07", kind: "message", detail: 'Respondeu ao contato.' }] },
   { id: 131, name: 'João Pedro', segment: "elite", region: 'Península', phone: "", contactedAt: "2026-11-07", responseStatus: "responded", responseQuality: "follow_up", notes: '', history: [{ date: "2026-11-07", kind: "message", detail: 'Respondeu ao contato.' }] },
+  { id: 132, name: 'Ursula', segment: "elite", region: 'Geral', phone: "", contactedAt: "2026-11-07", responseStatus: "responded", responseQuality: "positive", notes: 'Enviou para um cliente que estava buscando QZ.', history: [{ date: "2026-11-07", kind: "message", detail: 'Enviou para um cliente que estava buscando QZ.' }] },
+  { id: 133, name: 'Felipe', segment: "general", region: 'Geral', phone: "", contactedAt: "2026-11-07", responseStatus: "responded", responseQuality: "positive", notes: 'Falou que tem cliente no perfil.', history: [{ date: "2026-11-07", kind: "message", detail: 'Falou que tem cliente no perfil.' }] },
 ];
 
 export type CampaignId = "pre-venda-lessence" | "orygem-cassiano";
@@ -96,10 +98,10 @@ export const campaigns: Campaign[] = [
     id: "orygem-cassiano",
     name: "Orygem Cassiano",
     startedAt: "2026-11-07",
-    target: 98,
+    target: 99,
     elite: 34,
     phaseNote: null,
-    storageKey: "gestor-parcerias:partners:orygem-cassiano:v3",
+    storageKey: "gestor-parcerias:partners:orygem-cassiano:v4",
     initialPartners: orygemPartners,
   },
 ];
